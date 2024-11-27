@@ -3,6 +3,7 @@ import 'package:fintech/providers/user_providers.dart';
 import 'package:fintech/screens/investers/investment_screen.dart';
 import 'package:fintech/screens/investers/opportunities.dart';
 import 'package:fintech/screens/profile_screen.dart';
+import 'package:fintech/screens/sme/sme_dashboard.dart';
 import 'package:fintech/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,9 +25,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   late UserModel user;
   // ignore: prefer_final_fields
   late List<Widget> _pages = [
-    const Center(child: Text('SME Dashboard')),
-    InvestmentsScreen(),
-    OpportunitiesScreen(),
+    if (user.role == 'sme') SmeDashboard(),
+    if (user.role == 'investor') InvestmentsScreen(),
+    if (user.role == 'investor') OpportunitiesScreen(),
     ProfileScreen(user: user),
   ];
 
