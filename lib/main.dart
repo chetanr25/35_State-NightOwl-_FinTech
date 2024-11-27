@@ -1,6 +1,7 @@
 import 'package:fintech/core/themes.dart';
 import 'package:fintech/firebase_options.dart';
 import 'package:fintech/home_screen.dart';
+import 'package:fintech/screens/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme,
-      home: HomePage(),
+      // home: HomePage(),
+      home: LoginScreen(),
     );
   }
 }
