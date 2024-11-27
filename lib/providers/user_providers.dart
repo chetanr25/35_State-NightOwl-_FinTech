@@ -2,7 +2,7 @@ import 'package:fintech/models/users_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/user_models.dart';
+// import '../models/user_models.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, UserModel>((ref) {
   return UserNotifier();
@@ -42,12 +42,13 @@ class UserNotifier extends StateNotifier<UserModel> {
       if (docSnapshot.exists) {
         final data = docSnapshot.data()!;
         state = UserModel(
-          userId: uid,
-          displayName: data['displayName'],
-          email: data['email'],
-          role: data['role'],
           profileCompleted: data['profileCompleted'],
-          createdAt: data['createdAt'],
+          // userId: uid,
+          // displayName: data['displayName'],
+          // email: data['email'],
+          // role: data['role'],
+          // profileCompleted: data['profileCompleted'],
+          // createdAt: data['createdAt'],
           // profileImageUrl: data['profileImageUrl'],
 
           additionalData: data['additionalData'],

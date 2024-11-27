@@ -22,9 +22,10 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(ref.watch(userProvider).additionalData);
-    print(ref.watch(userProvider).displayName);
-    print(ref.watch(userProvider).email);
+    // print(ref.watch(userProvider).additionalData);
+    // print(ref.watch(userProvider).displayName);
+    // print(ref.watch(userProvider).email);
+    print(ref.watch(userProvider).toFirestore());
     return MaterialApp(
         title: 'Flutter Demo',
         theme: theme,
@@ -32,8 +33,7 @@ class MyApp extends ConsumerWidget {
         // home: HomePage(),
         // home: LoginScreen(),
         // home: RegistrationScreen(),
-        home: ref.watch(userProvider).displayName != null &&
-                ref.watch(userProvider).displayName != ''
+        home: ref.watch(userProvider).profileCompleted
             ? HomePage()
             : LoginScreen()
         // home: StreamBuilder(

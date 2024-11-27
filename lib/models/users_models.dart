@@ -3,10 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   final String? userId;
   final String? email;
+  final String? phoneNumber;
   final String? displayName;
   final String? role;
   final bool profileCompleted;
-  final String? profileImageUrl;
+  final String profileImageUrl;
   final DateTime createdAt;
   final Map<String, dynamic> additionalData;
 
@@ -25,6 +26,7 @@ class UserModel {
       email: email ?? this.email,
       displayName: displayName ?? this.displayName,
       role: role ?? this.role,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
       profileCompleted: profileCompleted ?? this.profileCompleted,
       createdAt: createdAt ?? this.createdAt,
       additionalData: additionalData ?? this.additionalData,
@@ -36,25 +38,15 @@ class UserModel {
     this.userId,
     this.email,
     this.displayName,
+    this.phoneNumber,
     required this.profileCompleted,
-    this.profileImageUrl,
+    this.profileImageUrl =
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
     this.role,
     DateTime? createdAt,
     Map<String, dynamic>? additionalData = const {},
   })  : createdAt = createdAt ?? DateTime.now(),
         additionalData = additionalData ?? const {};
-
-  // UserModel({
-  //    this.userId,
-  //    this.email,
-  //    this.displayName,
-  //    this.profileCompleted,
-  //   this.profileImageUrl,
-  //   required this.role,
-  //   DateTime? createdAt,
-  //   Map<String, dynamic>? additionalData = const {},
-  // })  : createdAt = createdAt ?? DateTime.now(),
-  //       additionalData = additionalData ?? const {};
 
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
