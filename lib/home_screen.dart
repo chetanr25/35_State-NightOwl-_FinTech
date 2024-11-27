@@ -1,3 +1,6 @@
+import 'package:fintech/models/users_models.dart';
+import 'package:fintech/screens/investment_screen.dart';
+import 'package:fintech/screens/profile_screen.dart';
 import 'package:fintech/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -9,11 +12,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
+  final List<Widget> _pages = [
     Center(child: Text('SME Dashboard')),
-    Center(child: Text('Investor Dashboard')),
+    InvestmentsScreen(),
     Center(child: Text('Investment Opportunities')),
-    Center(child: Text('Profile')),
+    ProfileScreen(user: UserModel.dummyUser(type: UserType.sme)),
   ];
 
   void _onItemTapped(int index) {
@@ -25,9 +28,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('SME Investment Platform'),
-      ),
+      // appBar: AppBar(
+      //   title: const Text('SME Investment Platform'),
+      // ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: AppBottomNavBar(
         selectedIndex: _selectedIndex,
