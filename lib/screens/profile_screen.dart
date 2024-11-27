@@ -49,11 +49,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 16),
               Text(
-                _user.name,
+                _user.displayName ?? '',
                 // style: Theme.of(context).textTheme.headline6,
               ),
               Text(
-                _user.email,
+                _user.email ?? '',
                 // style: Theme.of(context).textTheme.subtitle1,
               ),
               SizedBox(height: 16),
@@ -72,12 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailRow('User Type',
-                _user.userType == UserType.sme ? 'SME' : 'Investor'),
-            if (_user.companyName != null)
-              _buildDetailRow('Company', _user.companyName!),
-            if (_user.industry != null)
-              _buildDetailRow('Industry', _user.industry!),
+            _buildDetailRow('Role', _user.role ?? ''),
           ],
         ),
       ),
@@ -108,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 TextFormField(
-                  initialValue: _user.name,
+                  initialValue: _user.displayName,
                   decoration: InputDecoration(labelText: 'Name'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {

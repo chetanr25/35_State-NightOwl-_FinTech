@@ -1,20 +1,34 @@
+import 'package:fintech/models/users_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_models.dart';
 
-final userProvider = StateNotifierProvider<UserNotifier, UserState>((ref) {
+final userProvider = StateNotifierProvider<UserNotifier, UserModel>((ref) {
   return UserNotifier();
 });
 
-class UserNotifier extends StateNotifier<UserState> {
-  UserNotifier() : super(UserState()) {
+class UserNotifier extends StateNotifier<UserModel> {
+  UserNotifier()
+      : super(UserModel(
+          userId: '',
+          email: '',
+          displayName: '',
+          profileCompleted: false,
+          role: '',
+        )) {
     // Initialize by listening to Firebase Auth changes
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         _loadUserData(user.uid);
       } else {
-        state = UserState();
+        state = UserModel(
+          userId: '',
+          email: '',
+          displayName: '',
+          profileCompleted: false,
+          role: '',
+        );
       }
     });
   }
@@ -27,14 +41,15 @@ class UserNotifier extends StateNotifier<UserState> {
       final docSnapshot = await _firestore.collection('users').doc(uid).get();
       if (docSnapshot.exists) {
         final data = docSnapshot.data()!;
-        state = UserState(
+        state = UserModel(
           userId: uid,
-          username: data['username'],
+          displayName: data['displayName'],
           email: data['email'],
-          userType: data['userType'],
-          profileImageUrl: data['profileImageUrl'],
-          isAuthenticated: true,
-          phoneNumber: data['phoneNumber'],
+          role: data['role'],
+          profileCompleted: data['profileCompleted'],
+          createdAt: data['createdAt'],
+          // profileImageUrl: data['profileImageUrl'],
+
           additionalData: data['additionalData'],
         );
       }
@@ -65,14 +80,8 @@ class UserNotifier extends StateNotifier<UserState> {
       await _firestore.collection('users').doc(uid).update(updates);
 
       state = state.copyWith(
-        username: username ?? state.username,
-        userType: userType != null
-            ? UserType.values.firstWhere(
-                (e) => e.toString().split('.').last == userType,
-                orElse: () => state.userType!)
-            : state.userType,
-        profileImageUrl: profileImageUrl ?? state.profileImageUrl,
-        phoneNumber: phoneNumber ?? state.phoneNumber,
+        displayName: username ?? state.displayName,
+        role: userType ?? state.role,
         additionalData: additionalData ?? state.additionalData,
       );
     } catch (e) {
@@ -84,7 +93,13 @@ class UserNotifier extends StateNotifier<UserState> {
   Future<void> signOut() async {
     try {
       await _auth.signOut();
-      state = UserState();
+      state = UserModel(
+        userId: '',
+        email: '',
+        displayName: '',
+        profileCompleted: false,
+        role: '',
+      );
     } catch (e) {
       print('Error signing out: $e');
       throw e;
@@ -92,9 +107,9 @@ class UserNotifier extends StateNotifier<UserState> {
   }
 
   // Getter methods for easy access
-  String? get username => state.username;
-  UserType? get userType => state.userType;
-  bool get isAuthenticated => state.isAuthenticated;
-  bool get isInvestor => state.userType == UserType.investor;
-  bool get isSME => state.userType == UserType.sme;
+  String? get username => state.displayName;
+  String? get userType => state.role;
+  bool get isAuthenticated => state.userId != '';
+  bool get isInvestor => state.role == 'investor';
+  bool get isSME => state.role == 'sme';
 }
