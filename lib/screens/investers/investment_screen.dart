@@ -25,10 +25,26 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
         stream: _firestore
             .collection('investments')
             .where('investor',
+                // ignore: invalid_use_of_protected_member
                 isEqualTo: ref.read(userProvider.notifier).state.email)
             .snapshots(),
         builder: (context, snapshot) {
-          print(snapshot.data?.docs.first.data());
+          // try {
+          print(snapshot.data);
+          // } catch (e) {
+          //   // if
+          //   // print(e);
+          // }
+          // if (snapshot.hasData) {
+          //   print(snapshot.data?.docs.first.data());
+          // }
+          if (snapshot.hasData && snapshot.data == null) {
+            return const Center(child: Text('No investments found'));
+          }
+          if (snapshot.hasError) {
+            return const Center(child: CircularProgressIndicator());
+            // print(snapshot.error);
+          }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -67,10 +83,10 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showInvestmentDialog,
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _showInvestmentDialog,
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 
