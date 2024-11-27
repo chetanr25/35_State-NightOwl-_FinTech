@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 import 'package:fintech/core/constants.dart';
 import 'package:fintech/home_screen.dart';
@@ -140,8 +140,6 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                     ],
                   ),
                   SizedBox(height: 20),
-
-                  // Name Input
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
@@ -158,13 +156,8 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
                       return null;
                     },
                   ),
-                  // const SizedBox(height: 20),
-
-                  // Email Input
-
                   SizedBox(height: 20),
 
-                  // Phone Input
                   TextFormField(
                     controller: _phoneController,
                     decoration: InputDecoration(

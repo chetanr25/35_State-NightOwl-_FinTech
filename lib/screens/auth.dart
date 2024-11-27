@@ -1,5 +1,5 @@
-// import 'package:fintech/home_screen.dart';
-// import 'package:fintech/screens/home_screen.dart';
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:fintech/screens/registration.dart';
 import 'package:fintech/utils/snackbar_utils.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,10 @@ import 'package:fintech/models/users_models.dart';
 import 'package:fintech/providers/user_providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _LoginScreenState createState() => _LoginScreenState();
 }
 
@@ -28,33 +31,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       });
 
       try {
-        // UserCredential userCredential =
-        //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-        //   email: _emailController.text.trim(),
-        //   password: _passwordController.text.trim(),
-        // );
-
-        // Get user data from Firebase Auth
-        // User? user = userCredential.user;
-        // Generate a random ID for the user
         String randomId = DateTime.now().millisecondsSinceEpoch.toString();
-        // print(randomId);
-
-        // if (user != null) {
-        // Update Riverpod state with user info
+        // ignore: invalid_use_of_visible_for_testing_member
         ref.read(userProvider.notifier).state = UserModel(
           userId: randomId,
           email: _emailController.text,
           profileCompleted: false,
         );
-        // }
-        // UserCredential userCredential =
-        //     await FirebaseAuth.instance.signInWithEmailAndPassword(
-        //   email: _emailController.text.trim(),
-        //   password: _passwordController.text.trim(),
-        // );
-
-        // Navigate to home or dashboard after successful login
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (_) => RegistrationScreen()));
       } on FirebaseAuthException catch (e) {
@@ -90,7 +73,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -197,12 +179,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
-                        onPressed: () {
-                          // Implement forgot password
-                        },
+                        onPressed: () {},
                         child: const Text(
                           'Forgot Password?',
-                          // style: TextStyle(color: AppColors.primary),
                         ),
                       ),
                       TextButton(

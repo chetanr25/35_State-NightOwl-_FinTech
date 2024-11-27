@@ -9,6 +9,22 @@ final userProvider = StateNotifierProvider<UserNotifier, UserModel>((ref) {
 });
 
 class UserNotifier extends StateNotifier<UserModel> {
+  Future<void> updateProfile(UserModel updatedUser) async {
+    print(updatedUser);
+    try {
+      final currentUser = _auth.currentUser;
+      print(currentUser);
+      if (currentUser != null) {
+        await _firestore.collection('users').doc(currentUser.uid).update({
+          'displayName': updatedUser.displayName,
+        });
+        state = updatedUser;
+      }
+    } catch (e) {
+      print('Error updating profile: $e');
+    }
+  }
+
   UserNotifier()
       : super(UserModel(
           userId: '',
