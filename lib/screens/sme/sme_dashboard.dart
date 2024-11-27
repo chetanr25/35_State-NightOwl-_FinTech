@@ -1,18 +1,19 @@
 import 'package:fintech/models/sme_models.dart';
-import 'package:fintech/screens/sme/2_sme_application.dart';
-import 'package:fintech/screens/sme/sme_application_page.dart';
+import 'package:fintech/screens/sme/sme_application.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SmeDashboard extends StatefulWidget {
+  const SmeDashboard({super.key});
+
   @override
   _SmeDashboardState createState() => _SmeDashboardState();
 }
 
 class _SmeDashboardState extends State<SmeDashboard> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
@@ -20,18 +21,13 @@ class _SmeDashboardState extends State<SmeDashboard> {
   }
 
   Stream<List<SmeModels>> _getSmeOpportunities() {
-    User? currentUser = _auth.currentUser;
-    print('currentUser hehe');
-    // if (currentUser == null) return Stream.value([]);
-    // final x = currentUser.uid;
-    // print(x);
     final y = _firestore
         .collection('smes')
         // .where('smeId', isEqualTo: currentUser.uid)
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => SmeModels.fromFirestore(doc)).toList());
-    print(y);
+    // print(y);
     return y;
   }
 
@@ -56,7 +52,7 @@ class _SmeDashboardState extends State<SmeDashboard> {
         builder: (context, snapshot) {
           // print();
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
@@ -64,13 +60,13 @@ class _SmeDashboardState extends State<SmeDashboard> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('No opportunities created yet'),
+                  const Text('No opportunities created yet'),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SmeApplicationPage()));
+                          builder: (context) => const SmeApplicationScreen()));
                     },
-                    child: Text('Create New Opportunity'),
+                    child: const Text('Create New Opportunity'),
                   )
                 ],
               ),
@@ -84,7 +80,7 @@ class _SmeDashboardState extends State<SmeDashboard> {
               print(opportunity.title);
               print(opportunity.description);
               return Card(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
                   title: Text(opportunity.title),
                   subtitle: Column(

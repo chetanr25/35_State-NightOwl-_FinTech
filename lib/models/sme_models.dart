@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SmeModels {
-  final String id;
   final String smeId;
   final String title;
   final String description;
@@ -14,7 +13,6 @@ class SmeModels {
   final List<String> financialDocuments;
 
   SmeModels({
-    required this.id,
     required this.smeId,
     required this.title,
     required this.description,
@@ -29,8 +27,8 @@ class SmeModels {
 
   factory SmeModels.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    print(data.toString());
     return SmeModels(
-      id: doc.id,
       smeId: data['smeId'],
       title: data['title'],
       description: data['description'],

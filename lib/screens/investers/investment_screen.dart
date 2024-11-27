@@ -24,9 +24,11 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore
             .collection('investments')
-            .where('investorId', isEqualTo: ref.read(userProvider).userId)
+            .where('investor',
+                isEqualTo: ref.read(userProvider.notifier).state.email)
             .snapshots(),
         builder: (context, snapshot) {
+          print(snapshot.data?.docs.first.data());
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -40,6 +42,7 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
           var investments = snapshot.data!.docs
               .map((doc) => InvestmentModel.fromFirestore(doc))
               .toList();
+          print(investments);
 
           return ListView.builder(
             itemCount: investments.length,
@@ -48,7 +51,7 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
-                  title: Text('Investment in ${investment.smeId}'),
+                  title: Text('Investment in ${investment.title}'),
                   subtitle:
                       Text('Amount: \$${investment.amount.toStringAsFixed(2)}'),
                   trailing: Text(
