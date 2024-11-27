@@ -1,66 +1,96 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum UserType { sme, investor }
-
 class UserModel {
-  final String id;
-  final String email;
-  final String name;
-  final UserType userType;
-  final String? companyName;
-  final String? industry;
+  final String? userId;
+  final String? email;
+  final String? displayName;
+  final String? role;
+  final bool profileCompleted;
   final String? profileImageUrl;
   final DateTime createdAt;
+  final Map<String, dynamic> additionalData;
+
+  UserModel copyWith({
+    String? userId,
+    String? displayName,
+    String? email,
+    bool profileCompleted = false,
+    String? role,
+    bool? isAuthenticated,
+    String? phoneNumber,
+    Map<String, dynamic>? additionalData,
+  }) {
+    return UserModel(
+      userId: userId ?? this.userId,
+      email: email ?? this.email,
+      displayName: displayName ?? this.displayName,
+      role: role ?? this.role,
+      profileCompleted: profileCompleted ?? this.profileCompleted,
+      createdAt: createdAt ?? this.createdAt,
+      additionalData: additionalData ?? this.additionalData,
+      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+    );
+  }
 
   UserModel({
-    required this.id,
-    required this.email,
-    required this.name,
-    required this.userType,
-    this.companyName,
-    this.industry,
+    this.userId,
+    this.email,
+    this.displayName,
+    required this.profileCompleted,
     this.profileImageUrl,
+    this.role,
     DateTime? createdAt,
-  }) : createdAt = createdAt ?? DateTime.now();
+    Map<String, dynamic>? additionalData = const {},
+  })  : createdAt = createdAt ?? DateTime.now(),
+        additionalData = additionalData ?? const {};
+
+  // UserModel({
+  //    this.userId,
+  //    this.email,
+  //    this.displayName,
+  //    this.profileCompleted,
+  //   this.profileImageUrl,
+  //   required this.role,
+  //   DateTime? createdAt,
+  //   Map<String, dynamic>? additionalData = const {},
+  // })  : createdAt = createdAt ?? DateTime.now(),
+  //       additionalData = additionalData ?? const {};
 
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return UserModel(
-      id: doc.id,
-      email: data['email'],
-      name: data['name'],
-      userType: UserType.values.firstWhere(
-        (e) => e.toString() == 'UserType.${data['userType']}',
-      ),
-      companyName: data['companyName'],
-      industry: data['industry'],
+      userId: doc.id,
       profileImageUrl: data['profileImageUrl'],
+      email: data['email'],
+      displayName: data['displayName'],
+      role: data['role'],
+      profileCompleted: data['profileCompleted'],
       createdAt: (data['createdAt'] as Timestamp).toDate(),
+      additionalData: data['additionalData'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
       'email': email,
-      'name': name,
-      'userType': userType.toString().split('.').last,
-      'companyName': companyName,
-      'industry': industry,
-      'profileImageUrl': profileImageUrl,
+      'name': displayName,
+      'role': role,
+      'profileCompleted': profileCompleted,
       'createdAt': createdAt,
+      'profileImageUrl': profileImageUrl,
     };
   }
 
-  static UserModel dummyUser({UserType? type}) {
+  UserModel dummyUser() {
     return UserModel(
-      id: 'dummy-user-123',
+      userId: 'dummy-user-123',
       email: 'test@example.com',
-      name: 'John Doe',
-      userType: type ?? UserType.sme,
-      companyName: 'Test Company Ltd',
-      industry: 'Technology',
-      profileImageUrl: 'https://picsum.photos/200',
+      additionalData: {},
+      displayName: 'John Doe',
+      role: 'sme',
+      profileCompleted: false,
       createdAt: DateTime(2024, 1, 1),
+      profileImageUrl: '',
     );
   }
 }
