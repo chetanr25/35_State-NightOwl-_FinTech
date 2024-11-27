@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flex_color_scheme: ^8.0.1
   google_fonts: ^6.2.1
+  flutter_native_splash: ^2.4.3
 
 dev_dependencies:
   flutter_test:
