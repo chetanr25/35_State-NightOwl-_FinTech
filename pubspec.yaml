@@ -44,6 +44,7 @@ dependencies:
   firebase_storage: ^12.3.6
   firebase_auth: ^5.3.3
   flutter_riverpod: ^2.6.1
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_test:

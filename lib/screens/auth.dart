@@ -38,7 +38,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         // User? user = userCredential.user;
         // Generate a random ID for the user
         String randomId = DateTime.now().millisecondsSinceEpoch.toString();
-        print(randomId);
+        // print(randomId);
 
         // if (user != null) {
         // Update Riverpod state with user info
@@ -171,7 +171,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Login Button
                   ElevatedButton(
                     onPressed: _isLoading ? null : _login,
                     style: ElevatedButton.styleFrom(
@@ -194,7 +193,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Forgot Password and Sign Up Row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -208,15 +206,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {
-                          // Navigate to registration screen
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (_) => RegistrationScreen()
-                          // ));
-                        },
+                        onPressed: () {},
                         child: const Text(
                           'Sign Up',
-                          // style: TextStyle(color: AppColors.primary),
                         ),
                       ),
                     ],

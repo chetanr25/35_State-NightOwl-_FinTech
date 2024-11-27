@@ -16,6 +16,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     user = ref.read(userProvider);
+    print(user.toFirestore());
   }
 
   int _selectedIndex = 0;
