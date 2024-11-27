@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 
 class SmeApplicationScreen extends StatefulWidget {
+  const SmeApplicationScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _SmeApplicationScreenState createState() => _SmeApplicationScreenState();
 }
 
@@ -32,75 +38,66 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
       ),
       body: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            // Title Input
-            _buildTextFormField(
-              controller: _titleController,
-              label: 'Company name',
-              hint: 'Enter your product title',
-              validator: (value) => value!.isEmpty ? 'Title is required' : null,
-            ),
-
-            // Description Input
-            _buildMultilineTextFormField(
-              controller: _descriptionController,
-              label: 'Business plans',
-              hint: 'Provide a detailed description of your product',
-              validator: (value) =>
-                  value!.isEmpty ? 'Description is required' : null,
-            ),
-
-            // Funding Goal Input
-            _buildNumberFormField(
-              controller: _fundingGoalController,
-              label: 'Funding goal',
-              hint: 'Enter the total funding amount needed',
-              validator: (value) =>
-                  value!.isEmpty ? 'Funding goal is required' : null,
-            ),
-
-            // Industry Input
-            _buildTextFormField(
-              controller: _industryController,
-              label: 'Industry',
-              hint: 'Enter your industry',
-              validator: (value) =>
-                  value!.isEmpty ? 'Industry is required' : null,
-            ),
-
-            // Tags Section
-            _buildTagsSection(),
-            const SizedBox(height: 16),
-            // Business Plan Input
-            _buildMultilineTextFormField(
-              controller: _businessPlanController,
-              label: 'Business Plan',
-              hint: 'Provide an overview of your business plan',
-            ),
-
-            // Financial Documents Upload
-            _buildDocumentUploadSection(),
-
-            // Submit Button
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: ElevatedButton(
-                onPressed: _submitApplication,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          onVerticalDragCancel: () => FocusScope.of(context).unfocus(),
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              _buildTextFormField(
+                controller: _titleController,
+                label: 'Company name',
+                hint: 'Enter your product title',
+                validator: (value) =>
+                    value!.isEmpty ? 'Title is required' : null,
+              ),
+              _buildMultilineTextFormField(
+                controller: _descriptionController,
+                label: 'Description of the product',
+                hint: 'Provide a detailed description of your product',
+                validator: (value) =>
+                    value!.isEmpty ? 'Description is required' : null,
+              ),
+              _buildNumberFormField(
+                controller: _fundingGoalController,
+                label: 'Funding goal',
+                hint: 'Enter the total funding amount needed',
+                validator: (value) =>
+                    value!.isEmpty ? 'Funding goal is required' : null,
+              ),
+              _buildTextFormField(
+                controller: _industryController,
+                label: 'Industry',
+                hint: 'Enter your industry',
+                validator: (value) =>
+                    value!.isEmpty ? 'Industry is required' : null,
+              ),
+              _buildTagsSection(),
+              const SizedBox(height: 16),
+              _buildMultilineTextFormField(
+                controller: _businessPlanController,
+                label: 'Business Plan',
+                hint: 'Provide an overview of your business plan',
+              ),
+              _buildDocumentUploadSection(),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ElevatedButton(
+                  onPressed: _submitApplication,
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Submit Opportunity',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                child: const Text(
-                  'Submit Opportunity',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -202,10 +199,17 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
           ],
         ),
         Wrap(
-          spacing: 8,
+          spacing: 4,
           children: _tags
               .map((tag) => Chip(
-                    label: Text(tag),
+                    backgroundColor: Colors.blue,
+                    labelStyle: const TextStyle(color: Colors.white),
+                    avatar: const Icon(Icons.tag, color: Colors.white),
+                    label: Text(tag,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                        )),
                     onDeleted: () => _removeTag(tag),
                   ))
               .toList(),
@@ -277,8 +281,13 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
   Future<void> _submitApplication() async {
     if (_formKey.currentState!.validate()) {
       // Prepare data for Firestore
+      final userId = DateTime.now().millisecondsSinceEpoch.toString() +
+          '_' +
+          (100000 + Random().nextInt(900000)).toString();
+      final encodedUserId = base64Encode(utf8.encode(userId));
+      print(encodedUserId);
       final smeData = {
-        'smeId': FirebaseAuth.instance.currentUser?.uid,
+        'smeId': encodedUserId,
         'title': _titleController.text,
         'description': _descriptionController.text,
         'fundingGoal': double.parse(_fundingGoalController.text),
@@ -295,6 +304,8 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Opportunity submitted successfully')),
         );
+        Navigator.pop(context);
+
         // Optional: Navigate back or reset form
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

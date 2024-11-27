@@ -26,8 +26,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   // ignore: prefer_final_fields
   late List<Widget> _pages = [
     if (user.role == 'sme') SmeDashboard(),
-    if (user.role == 'investor') InvestmentsScreen(),
-    if (user.role == 'investor') OpportunitiesScreen(),
+    InvestmentsScreen(),
+    OpportunitiesScreen(),
     ProfileScreen(user: user),
   ];
 
