@@ -65,7 +65,7 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
             _buildTextFormField(
               controller: _industryController,
               label: 'Industry',
-              hint: 'Enter your business industry',
+              hint: 'Enter your industry',
               validator: (value) =>
                   value!.isEmpty ? 'Industry is required' : null,
             ),
