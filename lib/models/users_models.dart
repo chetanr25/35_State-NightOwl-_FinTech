@@ -27,10 +27,10 @@ class UserModel {
       displayName: displayName ?? this.displayName,
       role: role ?? this.role,
       phoneNumber: phoneNumber ?? this.phoneNumber,
-      profileCompleted: profileCompleted ?? this.profileCompleted,
-      createdAt: createdAt ?? this.createdAt,
+      profileCompleted: profileCompleted,
+      createdAt: createdAt,
       additionalData: additionalData ?? this.additionalData,
-      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+      profileImageUrl: profileImageUrl,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:fintech/models/users_models.dart';
 import 'package:fintech/providers/user_providers.dart';
-import 'package:fintech/screens/investment_screen.dart';
+import 'package:fintech/screens/investers/investment_screen.dart';
+import 'package:fintech/screens/investers/opportunities.dart';
 import 'package:fintech/screens/profile_screen.dart';
 import 'package:fintech/widgets/bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +17,16 @@ class _HomePageState extends ConsumerState<HomePage> {
   void initState() {
     super.initState();
     user = ref.read(userProvider);
-    print(user.toFirestore());
+    // print(user.toFirestore());
   }
 
   int _selectedIndex = 0;
   late UserModel user;
+  // ignore: prefer_final_fields
   late List<Widget> _pages = [
-    Center(child: Text('SME Dashboard')),
+    const Center(child: Text('SME Dashboard')),
     InvestmentsScreen(),
-    Center(child: Text('Investment Opportunities')),
+    OpportunitiesScreen(),
     ProfileScreen(user: user),
   ];
 
@@ -37,9 +39,6 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('SME Investment Platform'),
-      // ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: AppBottomNavBar(
         selectedIndex: _selectedIndex,

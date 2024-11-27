@@ -1,16 +1,18 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:fintech/providers/user_providers.dart';
 import 'package:fintech/utils/investment_utils.dart';
 import 'package:fintech/models/investment_models.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class InvestmentsScreen extends StatefulWidget {
+class InvestmentsScreen extends ConsumerStatefulWidget {
   @override
   _InvestmentsScreenState createState() => _InvestmentsScreenState();
 }
 
-class _InvestmentsScreenState extends State<InvestmentsScreen> {
+class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
@@ -22,14 +24,17 @@ class _InvestmentsScreenState extends State<InvestmentsScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: _firestore
             .collection('investments')
-            .where('investorId', isEqualTo: 'gPG5X0NmAI7RXm4eX6sR')
+            .where('investorId', isEqualTo: ref.read(userProvider).userId)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (!snapshot.hasData) {
-            return const Center(child: Text('No investments found'));
+          print(snapshot.data?.docs.length);
+          if (snapshot.data?.docs.length == 0) {
+            return const Center(
+                child: Text('No investments found',
+                    style: TextStyle(fontSize: 20)));
           }
 
           var investments = snapshot.data!.docs

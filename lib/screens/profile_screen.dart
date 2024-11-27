@@ -1,18 +1,19 @@
 import 'package:fintech/models/users_models.dart';
+import 'package:fintech/providers/user_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   final UserModel user;
 
-  const ProfileScreen({Key? key, required this.user}) : super(key: key);
+  const ProfileScreen({super.key, required this.user});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   late UserModel _user;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -20,14 +21,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _user = widget.user;
   }
 
+  void _saveProfile(String name) {
+    print(_user);
+    _user = _user.copyWith(displayName: name);
+    ref.read(userProvider.notifier).updateProfile(_user);
+    setState(() {
+      _user = _user.copyWith(displayName: name);
+    });
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Profile'),
+        title: const Text('My Profile'),
         actions: [
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: _editProfile,
           )
         ],
@@ -40,23 +51,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               CircleAvatar(
                 radius: 60,
+                // ignore: unnecessary_null_comparison
                 backgroundImage: _user.profileImageUrl != null
-                    ? NetworkImage(_user.profileImageUrl!)
+                    ? NetworkImage(_user.profileImageUrl)
                     : null,
+                // ignore: unnecessary_null_comparison
                 child: _user.profileImageUrl == null
-                    ? Icon(Icons.person, size: 60)
+                    ? const Icon(Icons.person, size: 60)
                     : null,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 _user.displayName ?? '',
-                // style: Theme.of(context).textTheme.headline6,
               ),
               Text(
                 _user.email ?? '',
-                // style: Theme.of(context).textTheme.subtitle1,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildProfileDetails(),
             ],
           ),
@@ -72,6 +83,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _buildDetailRow('Name', _user.displayName ?? ''),
+            const SizedBox(height: 8),
+            _buildDetailRow('Email', _user.email ?? ''),
+            const SizedBox(height: 8),
             _buildDetailRow('Role', _user.role ?? ''),
           ],
         ),
@@ -81,12 +96,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildDetailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontWeight: FontWeight.bold)),
-          Text(value),
+          Text(label, style: const TextStyle(fontSize: 16)),
+          Text(value, style: const TextStyle(fontSize: 16)),
         ],
       ),
     );
@@ -96,44 +111,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextFormField(
-                  initialValue: _user.displayName,
-                  decoration: InputDecoration(labelText: 'Name'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    // Update name logic
-                  },
-                ),
-                // Add more fields for editing profile
-                ElevatedButton(
-                  onPressed: _saveProfile,
-                  child: Text('Save Profile'),
-                )
-              ],
-            ),
+        TextEditingController nameController =
+            TextEditingController(text: _user.displayName);
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: 'Name'),
+                controller: nameController,
+              ),
+              // Add more fields for editing profile
+              ElevatedButton(
+                onPressed: () {
+                  if (nameController.text.isNotEmpty) {
+                    _saveProfile(nameController.text);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Name cannot be empty'),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Save Profile'),
+              )
+            ],
           ),
         );
       },
     );
-  }
-
-  void _saveProfile() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // Implement profile update logic
-      Navigator.of(context).pop();
-    }
   }
 }
 // Last edited just now
