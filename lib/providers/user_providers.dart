@@ -1,8 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:fintech/models/users_models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import '../models/user_models.dart';
 
 final userProvider = StateNotifierProvider<UserNotifier, UserModel>((ref) {
   return UserNotifier();
@@ -10,10 +11,9 @@ final userProvider = StateNotifierProvider<UserNotifier, UserModel>((ref) {
 
 class UserNotifier extends StateNotifier<UserModel> {
   Future<void> updateProfile(UserModel updatedUser) async {
-    print(updatedUser);
     try {
       final currentUser = _auth.currentUser;
-      print(currentUser);
+
       if (currentUser != null) {
         await _firestore.collection('users').doc(currentUser.uid).update({
           'displayName': updatedUser.displayName,
@@ -33,7 +33,6 @@ class UserNotifier extends StateNotifier<UserModel> {
           profileCompleted: false,
           role: '',
         )) {
-    // Initialize by listening to Firebase Auth changes
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
         _loadUserData(user.uid);
@@ -59,14 +58,6 @@ class UserNotifier extends StateNotifier<UserModel> {
         final data = docSnapshot.data()!;
         state = UserModel(
           profileCompleted: data['profileCompleted'],
-          // userId: uid,
-          // displayName: data['displayName'],
-          // email: data['email'],
-          // role: data['role'],
-          // profileCompleted: data['profileCompleted'],
-          // createdAt: data['createdAt'],
-          // profileImageUrl: data['profileImageUrl'],
-
           additionalData: data['additionalData'],
         );
       }

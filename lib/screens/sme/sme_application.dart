@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:file_picker/file_picker.dart';
 
 class SmeApplicationScreen extends StatefulWidget {
@@ -228,8 +229,8 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
         ),
         ElevatedButton.icon(
           onPressed: _uploadDocument,
-          icon: Icon(Icons.upload_file),
-          label: Text('Upload Document'),
+          icon: const Icon(Icons.upload_file),
+          label: const Text('Upload Document'),
         ),
         Wrap(
           spacing: 8,
@@ -281,11 +282,10 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
   Future<void> _submitApplication() async {
     if (_formKey.currentState!.validate()) {
       // Prepare data for Firestore
-      final userId = DateTime.now().millisecondsSinceEpoch.toString() +
-          '_' +
-          (100000 + Random().nextInt(900000)).toString();
+      final userId =
+          '${DateTime.now().millisecondsSinceEpoch}_${100000 + Random().nextInt(900000)}';
       final encodedUserId = base64Encode(utf8.encode(userId));
-      print(encodedUserId);
+
       final smeData = {
         'smeId': encodedUserId,
         'title': _titleController.text,
@@ -305,8 +305,6 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
           SnackBar(content: Text('Opportunity submitted successfully')),
         );
         Navigator.pop(context);
-
-        // Optional: Navigate back or reset form
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error submitting opportunity: $e')),

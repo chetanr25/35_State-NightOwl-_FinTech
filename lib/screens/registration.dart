@@ -43,10 +43,7 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
           role: _selectedUserType,
           profileCompleted: true,
         );
-        // print(ref.read(userProvider).userId);
-        print(ref.read(userProvider).toFirestore());
-        // return;
-        // Save to Firestore
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(ref.read(userProvider).email)

@@ -2,12 +2,12 @@ import 'package:fintech/models/sme_models.dart';
 import 'package:fintech/screens/sme/sme_application.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SmeDashboard extends StatefulWidget {
   const SmeDashboard({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _SmeDashboardState createState() => _SmeDashboardState();
 }
 
@@ -17,7 +17,6 @@ class _SmeDashboardState extends State<SmeDashboard> {
   @override
   void initState() {
     super.initState();
-    print('initState hehe');
   }
 
   Stream<List<SmeModels>> _getSmeOpportunities() {
@@ -27,7 +26,7 @@ class _SmeDashboardState extends State<SmeDashboard> {
         .snapshots()
         .map((snapshot) =>
             snapshot.docs.map((doc) => SmeModels.fromFirestore(doc)).toList());
-    // print(y);
+
     return y;
   }
 
@@ -35,13 +34,13 @@ class _SmeDashboardState extends State<SmeDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SME Dashboard'),
+        title: const Text('SME Dashboard'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SmeApplicationScreen()));
+                  builder: (context) => const SmeApplicationScreen()));
               // Replace with your navigation method
             },
           )
@@ -50,7 +49,6 @@ class _SmeDashboardState extends State<SmeDashboard> {
       body: StreamBuilder<List<SmeModels>>(
         stream: _getSmeOpportunities(),
         builder: (context, snapshot) {
-          // print();
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -77,8 +75,7 @@ class _SmeDashboardState extends State<SmeDashboard> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               SmeModels opportunity = snapshot.data![index];
-              print(opportunity.title);
-              print(opportunity.description);
+
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
@@ -92,12 +89,13 @@ class _SmeDashboardState extends State<SmeDashboard> {
                       ),
                     ],
                   ),
-                  // trailing: Text(
-                  //   opportunity..status ?? 'N/A',
-                  //   style: TextStyle(
-                  //     color: _getStatusColor(opportunity.status),
-                  //   ),
-                  // ),
+                  trailing: Text(
+                    opportunity.currentFunding.toString(),
+                    style: TextStyle(
+                      color: _getStatusColor(
+                          opportunity.currentFunding.toString()),
+                    ),
+                  ),
                 ),
               );
             },

@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class InvestmentsScreen extends ConsumerStatefulWidget {
+  const InvestmentsScreen({super.key});
+
   @override
   _InvestmentsScreenState createState() => _InvestmentsScreenState();
 }
@@ -25,30 +27,20 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
         stream: _firestore
             .collection('investments')
             .where('investor',
-                // ignore: invalid_use_of_protected_member
+                // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
                 isEqualTo: ref.read(userProvider.notifier).state.email)
             .snapshots(),
         builder: (context, snapshot) {
-          // try {
-          print(snapshot.data);
-          // } catch (e) {
-          //   // if
-          //   // print(e);
-          // }
-          // if (snapshot.hasData) {
-          //   print(snapshot.data?.docs.first.data());
-          // }
           if (snapshot.hasData && snapshot.data == null) {
             return const Center(child: Text('No investments found'));
           }
           if (snapshot.hasError) {
             return const Center(child: CircularProgressIndicator());
-            // print(snapshot.error);
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          print(snapshot.data?.docs.length);
+
           if (snapshot.data?.docs.length == 0) {
             return const Center(
                 child: Text('No investments found',
@@ -58,7 +50,6 @@ class _InvestmentsScreenState extends ConsumerState<InvestmentsScreen> {
           var investments = snapshot.data!.docs
               .map((doc) => InvestmentModel.fromFirestore(doc))
               .toList();
-          print(investments);
 
           return ListView.builder(
             itemCount: investments.length,
