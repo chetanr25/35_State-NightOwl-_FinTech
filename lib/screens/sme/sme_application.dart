@@ -6,8 +6,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SmeApplicationScreen extends StatefulWidget {
+import '../../providers/user_providers.dart';
+
+class SmeApplicationScreen extends ConsumerStatefulWidget {
   const SmeApplicationScreen({super.key});
 
   @override
@@ -15,7 +18,7 @@ class SmeApplicationScreen extends StatefulWidget {
   _SmeApplicationScreenState createState() => _SmeApplicationScreenState();
 }
 
-class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
+class _SmeApplicationScreenState extends ConsumerState<SmeApplicationScreen> {
   final _formKey = GlobalKey<FormState>();
 
   // Controllers for text inputs
@@ -297,12 +300,16 @@ class _SmeApplicationScreenState extends State<SmeApplicationScreen> {
         'createdAt': DateTime.now(),
         'businessPlan': _businessPlanController.text,
         'financialDocuments': _financialDocuments,
+        'email': ref.read(userProvider).email,
       };
 
       try {
-        await FirebaseFirestore.instance.collection('smes').add(smeData);
+        await FirebaseFirestore.instance
+            .collection('smes')
+            .doc(encodedUserId)
+            .set(smeData);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Opportunity submitted successfully')),
+          const SnackBar(content: Text('Opportunity submitted successfully')),
         );
         Navigator.pop(context);
       } catch (e) {
