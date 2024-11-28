@@ -74,12 +74,15 @@ class _OpportunitiesScreenState extends ConsumerState<OpportunitiesScreen> {
       appBar: AppBar(
         title: const Text('Investment Opportunities'),
       ),
-      body: ListView(
-        children: [
-          if (_isLoading) const Center(child: CircularProgressIndicator()),
-          ..._opportunities.map((opportunity) =>
-              _buildOpportunityCard(opportunity, context: context, ref: ref)),
-        ],
+      body: ListView.builder(
+        itemCount: _opportunities.length,
+        itemBuilder: (context, index) {
+          return _buildOpportunityCard(
+            _opportunities[index],
+            context: context,
+            ref: ref,
+          );
+        },
       ),
     );
   }
@@ -217,9 +220,12 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                           }
 
                           try {
+                            print(opportunity.currentFunding);
+                            print(opportunity.fundingGoal);
+                            print(investmentAmount);
                             if (opportunity.currentFunding + investmentAmount <=
                                 opportunity.fundingGoal) {
-                              FirebaseFirestore.instance
+                              await FirebaseFirestore.instance
                                   .collection('smes')
                                   .doc(opportunity.smeId)
                                   .update({
@@ -228,7 +234,8 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                                 'investments': FieldValue.arrayUnion([
                                   {
                                     'amount': investmentAmount,
-                                    'timestamp': FieldValue.serverTimestamp(),
+                                    'timestamp':
+                                        DateTime.now().toIso8601String(),
                                     'status': 'pending',
                                   },
                                 ]),
