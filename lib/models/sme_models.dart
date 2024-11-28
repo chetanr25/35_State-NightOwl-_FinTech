@@ -27,7 +27,7 @@ class SmeModels {
 
   factory SmeModels.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    print(data.toString());
+
     return SmeModels(
       smeId: data['smeId'],
       title: data['title'],

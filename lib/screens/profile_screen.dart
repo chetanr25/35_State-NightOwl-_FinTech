@@ -9,6 +9,7 @@ class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key, required this.user});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
@@ -22,7 +23,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   }
 
   void _saveProfile(String name) {
-    print(_user);
     _user = _user.copyWith(displayName: name);
     ref.read(userProvider.notifier).updateProfile(_user);
     setState(() {

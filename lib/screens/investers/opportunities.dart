@@ -1,7 +1,9 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, unused_element, invalid_use_of_visible_for_testing_member
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fintech/core/constants.dart';
 import 'package:fintech/models/sme_models.dart';
 import 'package:fintech/providers/user_providers.dart';
+import 'package:fintech/utils/snackbar_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,18 +15,8 @@ class OpportunitiesScreen extends ConsumerStatefulWidget {
 }
 
 class _OpportunitiesScreenState extends ConsumerState<OpportunitiesScreen> {
-  // List<String> _industries = [
-  //   'Technology',
-  //   'Healthcare',
-  //   'Finance',
-  //   'Agriculture',
-  //   'Education',
-  //   'Retail'
-  // ];
-
-  List<String> _selectedIndustries = [];
+  final List<String> _selectedIndustries = [];
   List<SmeModels> _opportunities = [];
-  // List<Map<String, dynamic>> _opportunities = [];
   bool _isLoading = false;
 
   @override
@@ -41,22 +33,21 @@ class _OpportunitiesScreenState extends ConsumerState<OpportunitiesScreen> {
     try {
       final snapshot =
           await FirebaseFirestore.instance.collection('smes').get();
-      // print(snapshot.docs);
 
       List<SmeModels> smeList = [];
 
-      // Convert each document to SmeModels
       for (var smeDoc in snapshot.docs) {
         smeList.add(SmeModels.fromFirestore(smeDoc));
       }
       // }
-      print(smeList);
+
       setState(() {
         _opportunities = smeList;
         _isLoading = false;
       });
     } catch (e) {
-      print('Error fetching opportunities: $e');
+      showSnackBar(context, 'Error fetching opportunities: $e');
+
       setState(() {
         _isLoading = false;
       });
@@ -77,93 +68,21 @@ class _OpportunitiesScreenState extends ConsumerState<OpportunitiesScreen> {
     }).toList();
   }
 
-  // Widget _buildOpportunityCard(SmeModels opportunity,
-  //     {bool isRecommended = false}) {
-  //   return Card(
-  //     margin: EdgeInsets.all(8),
-  //     color: isRecommended ? Colors.blue.shade50 : null,
-  //     child: GestureDetector(
-  //       onTap: () {},
-  //       child: ListTile(
-  //         title: Text(opportunity.title ?? 'Unknown'),
-  //         subtitle: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             Text(opportunity.industry ?? 'No industry specified'),
-  //             if (isRecommended)
-  //               Container(
-  //                 margin: const EdgeInsets.only(top: 4),
-  //                 padding:
-  //                     const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-  //                 decoration: BoxDecoration(
-  //                   color: Colors.blue,
-  //                   borderRadius: BorderRadius.circular(12),
-  //                 ),
-  //                 child: Text(
-  //                   'Recommended',
-  //                   style: TextStyle(color: Colors.white, fontSize: 12),
-  //                 ),
-  //               ),
-  //           ],
-  //         ),
-  //         trailing: Icon(Icons.arrow_forward_ios),
-  //         onTap: () {
-  //           // Handle opportunity selection
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Investment Opportunities'),
-        /*  bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: industries.map((industry) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: ChoiceChip(
-                    label: Text(industry),
-                    selected: _selectedIndustries.contains(industry),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        if (selected) {
-                          _selectedIndustries.add(industry);
-                        } else {
-                          _selectedIndustries.remove(industry);
-                        }
-                      });
-                    },
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-     */
+        title: const Text('Investment Opportunities'),
       ),
       body: ListView(
         children: [
           if (_isLoading) const Center(child: CircularProgressIndicator()),
-          ..._opportunities
-              .map((opportunity) => _buildOpportunityCard(opportunity,
-                  context: context, ref: ref))
-              .toList(),
+          ..._opportunities.map((opportunity) =>
+              _buildOpportunityCard(opportunity, context: context, ref: ref)),
         ],
       ),
     );
   }
-
-  // Widget _buildOpportunityCard(SmeModels opportunity,
-  //     {bool isRecommended = false}) {
-  //   return Card(child: Text(opportunity.title ?? 'Unknown'));
-  // }
 }
 
 Widget _buildOpportunityCard(SmeModels opportunity,
@@ -300,13 +219,6 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                           try {
                             if (opportunity.currentFunding + investmentAmount <=
                                 opportunity.fundingGoal) {
-                              // await FirebaseFirestore.instance
-                              //     .collection('smes')
-                              //     .doc(opportunity.smeId)
-                              //     .update({
-                              //   'currentFunding':
-                              //       FieldValue.increment(investmentAmount),
-                              // });
                               FirebaseFirestore.instance
                                   .collection('smes')
                                   .doc(opportunity.smeId)
@@ -321,7 +233,7 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                                   },
                                 ]),
                               });
-                              // Create investment record
+
                               await FirebaseFirestore.instance
                                   .collection('investments')
                                   .add({
@@ -335,6 +247,7 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                                 'industry': opportunity.industry,
                                 'tags': opportunity.tags,
                                 'investor':
+                                    // ignore: invalid_use_of_protected_member
                                     ref.read(userProvider.notifier).state.email,
                               });
                               Navigator.pop(context);

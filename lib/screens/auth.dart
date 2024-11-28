@@ -38,8 +38,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           email: _emailController.text,
           profileCompleted: false,
         );
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => RegistrationScreen()));
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const RegistrationScreen()));
       } on FirebaseAuthException catch (e) {
         _showErrorDialog(e.message ?? 'Login failed');
       } finally {

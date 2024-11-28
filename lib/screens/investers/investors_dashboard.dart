@@ -1,8 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:fintech/models/sme_models.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class InvestorOpportunitiesDashboard extends StatefulWidget {
+  const InvestorOpportunitiesDashboard({super.key});
+
   @override
   _InvestorOpportunitiesDashboardState createState() =>
       _InvestorOpportunitiesDashboardState();
@@ -28,7 +32,7 @@ class _InvestorOpportunitiesDashboardState
         title: Text('Investment Opportunities'),
         actions: [
           IconButton(
-            icon: Icon(Icons.filter_list),
+            icon: const Icon(Icons.filter_list),
             onPressed: () {
               // Implement filtering options
             },
@@ -39,11 +43,11 @@ class _InvestorOpportunitiesDashboardState
         stream: _getOpenOpportunities(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('No open opportunities available'),
             );
           }
@@ -53,25 +57,25 @@ class _InvestorOpportunitiesDashboardState
             itemBuilder: (context, index) {
               SmeModels opportunity = snapshot.data![index];
               return Card(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: ListTile(
                   title: Text(opportunity.title),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(opportunity.description),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         'Industry: ${opportunity.industry}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         'Funding Goal: \$${opportunity.fundingGoal}',
-                        style: TextStyle(color: Colors.green),
+                        style: const TextStyle(color: Colors.green),
                       ),
                       Text(
                         'Current Funding: \$${opportunity.currentFunding}',
-                        style: TextStyle(color: Colors.blue),
+                        style: const TextStyle(color: Colors.blue),
                       ),
                     ],
                   ),
@@ -80,7 +84,7 @@ class _InvestorOpportunitiesDashboardState
                       // Navigate to opportunity details or investment page
                       // Replace with your navigation method
                     },
-                    child: Text('Invest'),
+                    child:const Text('Invest'),
                   ),
                 ),
               );
