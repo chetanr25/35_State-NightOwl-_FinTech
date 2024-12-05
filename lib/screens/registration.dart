@@ -42,6 +42,9 @@ class _RegistrationScreenState extends ConsumerState<RegistrationScreen> {
           displayName: _nameController.text.trim(),
           role: _selectedUserType,
           profileCompleted: true,
+          additionalData: {
+            'industries': _selectedIndustries.toList(),
+          },
         );
 
         await FirebaseFirestore.instance

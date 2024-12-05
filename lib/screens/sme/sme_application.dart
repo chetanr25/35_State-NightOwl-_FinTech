@@ -43,7 +43,7 @@ class _SmeApplicationScreenState extends ConsumerState<SmeApplicationScreen> {
       body: Form(
         key: _formKey,
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          // onTap: () => FocusScope.of(context).unfocus(),
           onVerticalDragCancel: () => FocusScope.of(context).unfocus(),
           child: ListView(
             padding: const EdgeInsets.all(16),
@@ -252,7 +252,7 @@ class _SmeApplicationScreenState extends ConsumerState<SmeApplicationScreen> {
     if (_tagController.text.isNotEmpty) {
       setState(() {
         _tags.add(_tagController.text.trim());
-        _tagController.clear();
+        _tagController.text = '';
       });
     }
   }

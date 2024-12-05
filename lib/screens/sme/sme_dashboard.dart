@@ -1,5 +1,7 @@
+import 'package:fintech/core/aithing.dart';
 import 'package:fintech/models/sme_models.dart';
 import 'package:fintech/providers/user_providers.dart';
+import 'package:fintech/screens/render_markdown.dart';
 import 'package:fintech/screens/sme/sme_application.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -145,6 +147,38 @@ class _SmeDashboardState extends ConsumerState<SmeDashboard> {
                 );
               },
             ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                side: BorderSide(color: const Color.fromARGB(255, 6, 67, 116)),
+              ),
+              onPressed: () async {
+                // Get the current opportunity from the ListView
+                // // final opportunity =
+                // print(opportunity.investments);
+                // print(opportunity.smeId);
+                // print(opportunity.description);
+                // print(opportunity.tags);
+                // print(opportunity.industry);
+                // print(opportunity.fundingGoal);
+                // print(opportunity.investments);
+                final response = await getInvestmentRecommendations(
+                  smeId: opportunity.smeId,
+                  smeDescription: opportunity.description,
+                  smeTags: opportunity.tags,
+                  smeIndustry: opportunity.industry,
+                  fundingGoal: opportunity.fundingGoal,
+                  pendingInvestments: opportunity.investments,
+                  investments: opportunity.investments,
+                );
+                // print(response);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RenderMarkdown(
+                          markdownContent: response ?? '',
+                        )));
+              },
+              child: const Text('Generate Investment Recommendations'),
+            )
           ],
         ),
       ),
@@ -193,35 +227,26 @@ class _SmeDashboardState extends ConsumerState<SmeDashboard> {
             );
           }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              SmeModels opportunity = snapshot.data![index];
+          return Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    SmeModels opportunity = snapshot.data![index];
 
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: _buildOpportunityCard(opportunity),
-                // child: ListTile(
-                //   title: Text(opportunity.title),
-                //   subtitle: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Text(opportunity.industry),
-                //       Text(
-                //         'Funding: \$${opportunity.currentFunding} / \$${opportunity.fundingGoal}',
-                //       ),
-                //     ],
-                //   ),
-                //   trailing: Text(
-                //     opportunity.currentFunding.toString(),
-                //     style: TextStyle(
-                //       color: _getStatusColor(
-                //           opportunity.currentFunding.toString()),
-                //     ),
-                //   ),
-                // ),
-              );
-            },
+                    return Card(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: _buildOpportunityCard(opportunity),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

@@ -11,7 +11,7 @@ class SmeModels {
   final DateTime createdAt;
   final String? businessPlan;
   final List<String> financialDocuments;
-
+  final List<Map<String, dynamic>> investments;
   SmeModels({
     required this.smeId,
     required this.title,
@@ -23,6 +23,7 @@ class SmeModels {
     DateTime? createdAt,
     this.businessPlan,
     this.financialDocuments = const [],
+    this.investments = const [],
   }) : createdAt = createdAt ?? DateTime.now();
 
   factory SmeModels.fromFirestore(DocumentSnapshot doc) {
@@ -39,6 +40,7 @@ class SmeModels {
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       businessPlan: data['businessPlan'],
       financialDocuments: List<String>.from(data['financialDocuments'] ?? []),
+      investments: List<Map<String, dynamic>>.from(data['investments'] ?? []),
     );
   }
 
