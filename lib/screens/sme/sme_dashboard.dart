@@ -153,15 +153,6 @@ class _SmeDashboardState extends ConsumerState<SmeDashboard> {
                 side: BorderSide(color: const Color.fromARGB(255, 6, 67, 116)),
               ),
               onPressed: () async {
-                // Get the current opportunity from the ListView
-                // // final opportunity =
-                // print(opportunity.investments);
-                // print(opportunity.smeId);
-                // print(opportunity.description);
-                // print(opportunity.tags);
-                // print(opportunity.industry);
-                // print(opportunity.fundingGoal);
-                // print(opportunity.investments);
                 final response = await getInvestmentRecommendations(
                   smeId: opportunity.smeId,
                   smeDescription: opportunity.description,
@@ -171,7 +162,7 @@ class _SmeDashboardState extends ConsumerState<SmeDashboard> {
                   pendingInvestments: opportunity.investments,
                   investments: opportunity.investments,
                 );
-                // print(response);
+
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RenderMarkdown(
                           markdownContent: response ?? '',
