@@ -233,6 +233,16 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                                     FieldValue.increment(investmentAmount),
                                 'investments': FieldValue.arrayUnion([
                                   {
+                                    'investor':
+                                        // ignore: invalid_use_of_protected_member
+                                        ref
+                                            .read(userProvider.notifier)
+                                            .state
+                                            .email,
+                                    'industryExpertise': ref
+                                        .read(userProvider.notifier)
+                                        .state
+                                        .additionalData['industries'],
                                     'amount': investmentAmount,
                                     'timestamp':
                                         DateTime.now().toIso8601String(),
