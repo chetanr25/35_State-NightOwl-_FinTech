@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -64,7 +65,7 @@ Future<String?> getInvestmentRecommendations({
   // Call Gemini API
   final model = GenerativeModel(
     model: 'gemini-pro',
-    apiKey: "AIzaSyCYmEFAE9SKv5_3hBkPLL3jL-weYa77Ngw" ?? '',
+    apiKey: dotenv.env['GEMINI_API_KEY']!,
   );
 
   final content = [Content.text(prompt)];
