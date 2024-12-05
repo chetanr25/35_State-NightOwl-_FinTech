@@ -4,7 +4,16 @@ A dynamic platform that bridges the gap between Small and Medium Enterprises (SM
 
 ---
 
+### Download APK
+
+<a href="https://github.com/chetanr25/invest-bridge/raw/refs/heads/main/apk_file/app-release.apk">
+<img src="https://camo.githubusercontent.com/2b0b605d77141fd0ff5f5aa8159f6121c4d4bd213d5ee2aba1753d678faaf28c/68747470733a2f2f692e6962622e636f2f71306d6463345a2f6765742d69742d6f6e2d6769746875622e706e67" width=350/>
+</a>
+
+---
+
 ## 📑 Table of Contents
+
 1. [Introduction](#-introduction)
 2. [Project Overview](#-project-overview)
 3. [Key Features](#-key-features)
@@ -17,6 +26,7 @@ A dynamic platform that bridges the gap between Small and Medium Enterprises (SM
 ---
 
 ## 🌟 Introduction
+
 SME-Investor Connect is a cutting-edge platform designed to revolutionize how SMEs and investors collaborate. SMEs seeking funding can present their projects to potential investors, while investors can diversify their portfolios by exploring various industries and areas of interest.
 
 Our platform provides a **secure, user-friendly, and efficient** environment for both SMEs and investors. Powered by Firebase for secure authentication and Flutter for a beautiful, responsive interface, this project ensures a seamless experience for all users.
@@ -35,25 +45,30 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
 ## 🚀 Key Features
 
 #### 🔐 Secure Authentication
+
 - Email and password login using **Firebase Authentication**.
-  
+
 #### 🏢 Registration for SMEs and Investors
+
 - **Full Name** and **Phone Number** required.
 - Role selection: **SME** or **Investor**.
 - Industry and interest area from **30+ categories** for enhanced connections.
 
 #### 📊 SME Dashboard
+
 - Create investment campaigns and monitor funding.
 - View, Approve or reject investor proposals.
 - **AI-Powered Decision Support**: Leverages AI to assist SMEs in making informed decisions on approving or rejecting investor proposals, ensuring smarter and more strategic funding choices.
 - Real-time funding status updates.
 
 #### 💼 Investor Portfolio
+
 - Track all investments in one place.
 - See pending or approved investment statuses.
 - Stay informed with a detailed portfolio overview.
 
 #### 🖥️ User Profiles
+
 - Edit profile anytime.
 - Display comprehensive user details.
 
@@ -62,6 +77,7 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
 ## 💡 Use Cases
 
 1. **For SMEs**:
+
    - Quickly raise funds from investors.
    - Manage investments in real-time.
    - Build credibility in the investor community.
@@ -72,8 +88,11 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
    - Diversify portfolios across multiple industries.
 
 ---
+
 ## 📸 Screenshots
+
 #### (Adding screenshots soon)
+
 ---
 
 ## 🛠 Getting Started
@@ -82,27 +101,34 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
 <summary>Click to expand setup instructions</summary>
 
 ### Prerequisites
+
 Ensure you have the following installed:
+
 - **Flutter**: [Install Flutter](https://flutter.dev/docs/get-started/install)
 - **Firebase CLI**: [Set up Firebase](https://firebase.google.com/docs/cli)
 - **Git**: [Download Git](https://git-scm.com/downloads)
 
 ### Setup Steps
+
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/chetanr25/invest-bridge.git
    cd invest-bridge
    ```
 
 2. **Install Dependencies**:
+
    ```bash
    flutter pub get
    ```
 
 3. **Setup Firebase**:
+
    - Follow [Firebase Setup Guide](https://firebase.google.com/docs/flutter/setup) to connect your project to Firebase.
 
 4. **API Key Configuration**:
+
    - Obtain your **Gemini API Key** and create a `.env` file.
    - Use `.env.example` as a template:
      ```bash
@@ -123,6 +149,7 @@ Ensure you have the following installed:
 ---
 
 ## 🛠 Tech Stack
+
 - **Flutter**: Frontend framework for a responsive, cross-platform UI.
 - **Firebase Authentication**: Secure and scalable authentication solution.
 - **Firebase Firestore**: Highly scalable No-SQL data storage solution.
@@ -131,5 +158,5 @@ Ensure you have the following installed:
 ---
 
 ## 📜 License
-This project is licensed under the [LICENSE](LICENSE)
 
+This project is licensed under the [LICENSE](LICENSE)
