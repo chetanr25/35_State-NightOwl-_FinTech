@@ -1,4 +1,4 @@
-# 🚀 Invest-Bridge
+# 🚀 Run Revenue
 
 A dynamic platform that bridges the gap between Small and Medium Enterprises (SMEs) and Investors, offering seamless funding opportunities and investment tracking. SMEs get the exposure they need to scale their businesses, while investors gain access to a wide range of lucrative investment opportunities.
 
@@ -6,7 +6,7 @@ A dynamic platform that bridges the gap between Small and Medium Enterprises (SM
 
 ### Download APK
 
-<a href="https://github.com/chetanr25/invest-bridge/raw/refs/heads/main/apk_file/app-release.apk">
+<a href="https://github.com/chetanr25/run-revenue/raw/refs/heads/main/apk_file/app-release.apk">
 <img src="https://camo.githubusercontent.com/2b0b605d77141fd0ff5f5aa8159f6121c4d4bd213d5ee2aba1753d678faaf28c/68747470733a2f2f692e6962622e636f2f71306d6463345a2f6765742d69742d6f6e2d6769746875622e706e67" width=350/>
 </a>
 
@@ -113,8 +113,8 @@ Ensure you have the following installed:
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/chetanr25/invest-bridge.git
-   cd invest-bridge
+   git clone https://github.com/chetanr25/run-revenue.git
+   cd run-revenue
    ```
 
 2. **Install Dependencies**:
