@@ -220,9 +220,7 @@ Widget _buildOpportunityCard(SmeModels opportunity,
                           }
 
                           try {
-                            print(opportunity.currentFunding);
-                            print(opportunity.fundingGoal);
-                            print(investmentAmount);
+                          
                             if (opportunity.currentFunding + investmentAmount <=
                                 opportunity.fundingGoal) {
                               await FirebaseFirestore.instance
