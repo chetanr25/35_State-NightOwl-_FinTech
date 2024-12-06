@@ -89,16 +89,15 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
 
 ---
 
- <td align="center"><img src="assets/screenshots/details_screen.PNG" width="200"/><br/>Details Screen</td>
  
 
 ## 📸 Screenshots
 
 <table align="center">
   <tr>
-    <td align="center"><img src="https://github.com/user-attachments/assets/6ef34445-c3ab-4e45-aa36-bfed22c773e9" width="200"/><br/>Login Page</td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/2983140f-26bb-44d7-8c22-ea4731b2b254" width="200"/><br/>Registration (SME/Investor)</td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/7563506a-5aa3-4461-83a1-4fdfe0b0a973" width="200"/><br/>Registration Page</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/6ef34445-c3ab-4e45-aa36-bfed22c773e9" width="90%"/><br/>Login Page <br></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/2983140f-26bb-44d7-8c22-ea4731b2b254" width="90%"/><br/>Registration (SME/Investor)<br></td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/7563506a-5aa3-4461-83a1-4fdfe0b0a973" width="90%"/><br/>Registration Page<br></td>
     </tr>
 
 
@@ -107,15 +106,15 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
 
    
   <tr>
-    <td align="center"><img src="https://github.com/user-attachments/assets/279c8612-4245-4d8e-9a44-01cb617041d1" width="200"/><br/>Profile</td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/737fa760-c0ee-4b94-972f-a7bbe907ffd5" width="200"/><br/>Edit Profile</td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/aca83a30-6b5e-4168-8f5a-11be1b266e16" width="200"/><br/>Select Area of interest page</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/279c8612-4245-4d8e-9a44-01cb617041d1" width="95%"/><br/>Profile</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/737fa760-c0ee-4b94-972f-a7bbe907ffd5" width="95%"/><br/>Edit Profile</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/aca83a30-6b5e-4168-8f5a-11be1b266e16" width="95%"/><br/>Select Area of interest page</td>
   </tr>
   
    <tr>
-    <td align="center"><img src="https://github.com/user-attachments/assets/9a829902-89f7-462a-a759-7350487368da" width="200"/><br/>SME Listings for Investors</td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/bec5c475-8836-4572-a66c-06599ccedd11" width="200"/><br/>Amount investor invests</td>
-    <td align="center"><img src="https://github.com/user-attachments/assets/eb3b7d9e-2a53-4665-b062-d1cb644ae8f2"  width="200"/><br/>Investors portfolio/Dashboard</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/9a829902-89f7-462a-a759-7350487368da" width="95%"/><br/>SME Listings for Investors</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/bec5c475-8836-4572-a66c-06599ccedd11" width="95%"/><br/>Amount investor invests</td>
+    <td align="center"><img src="https://github.com/user-attachments/assets/eb3b7d9e-2a53-4665-b062-d1cb644ae8f2"  width="95%"/><br/>Investors portfolio/Dashboard</td>
   </tr>
 
 
