@@ -119,9 +119,9 @@ Our platform provides a **secure, user-friendly, and efficient** environment for
 </table>
 
 ## Demo Video
-<p align="center" width="300">
-
-https://github.com/user-attachments/assets/9a16fd8e-67e1-4940-8cb1-e0d8405d87f4
+<p align="center">
+   
+   https://github.com/user-attachments/assets/9a16fd8e-67e1-4940-8cb1-e0d8405d87f4
    
 </p>
 
