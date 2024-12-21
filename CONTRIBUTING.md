@@ -91,17 +91,17 @@ Thank you for considering contributing to **Run Revenue**! Your contributions ar
 
 ### 🐛 **Bug Reports**  
 If you encounter a bug, please report it by creating an issue. Include detailed information to help us understand and reproduce the issue:  
-- 📝 Steps to reproduce the bug.  
-- ✅ Expected behavior.  
-- ❌ Actual behavior.  
-- 📷 Screenshots or logs, if applicable.  
+- Steps to reproduce the bug.  
+- Expected behavior.  
+- Actual behavior.  
+- Screenshots or logs, if applicable.  
 
 ### 🌟 **Feature Requests**  
 We welcome new feature ideas! To request a feature, open an issue and provide:  
-- 🔖 A clear and descriptive title.  
-- 💡 The motivation for the feature.  
-- 📄 A detailed description of the proposed solution.  
-- 🧩 Any alternatives considered.  
+- A clear and descriptive title.  
+- The motivation for the feature.  
+- A detailed description of the proposed solution.  
+- Any alternatives considered.  
 
 ---
 
