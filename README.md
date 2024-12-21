@@ -21,7 +21,8 @@ A dynamic platform that bridges the gap between Small and Medium Enterprises (SM
 5. [Screenshots](#-screenshots)
 6. [Getting Started](#-getting-started)
 7. [Tech Stack](#-tech-stack)
-8. [License](#-license)
+8. [How to Contribute](#-how-to-contribute)
+9. [License](#-license)
 
 ---
 
@@ -188,6 +189,13 @@ Ensure you have the following installed:
 - **Dart**: High-performance backend logic with Flutter.
 
 ---
+
+## 💻 How to Contribute
+
+We welcome contributions to the Run Revenue project! If you'd like to contribute, please refer to our [Contributing Guide](CONTRIBUTING.md) for detailed instructions on how to report bugs, request features, and submit code.
+
+Thank you for your interest in contributing!
+
 
 ## 📜 License
 
